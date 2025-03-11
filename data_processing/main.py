@@ -79,6 +79,8 @@ out = []
 src_path = "./data/csv/"
 if src_path not in sys.path:
     sys.path.insert(0, src_path)
+general_parquet_output_path = "./data/parquet/"
+general_json_output_path = "./data/json/"
 
 from pyspark.sql import SparkSession
 from schemas.gkg_schema import gkg_schema
@@ -126,9 +128,10 @@ if __name__ == "__main__":
                 output = download_and_extract(url, out)
                 if len(output) > 0:
                     for a in range(len(output)):
-                        raw_file_path = src_path + str(output[a])
-                        parquet_output_path = "./data/transformed_gkg.parquet"
-                        json_output_path = "./data/transformed_gkg.json"
-                        run_pipeline(raw_file_path, parquet_output_path, json_output_path)
+                        base_name = Path(output[a]).stem
+                        raw_file_path = src_path + base_name + ".csv"
+                        parquet_output_path = general_parquet_output_path + base_name + ".parquet" 
+                        json_output_path = general_json_output_path + base_name + ".json"
+                        run_pipeline(raw_file_path, parquet_output_path, json_output_path) 
         write("Files downloaded and processed. Sleeping for 15 minutes...")
         sleep(15*60)
