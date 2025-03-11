@@ -9,6 +9,8 @@ volumes:
     driver: local
   logstashdata01:
     driver: local
+  scraperdata:
+    driver: local
 
 networks:
   elastic:
