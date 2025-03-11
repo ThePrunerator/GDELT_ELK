@@ -12,7 +12,8 @@ LAST_UPDATE_URL = "http://data.gdeltproject.org/gdeltv2/lastupdate.txt"
 script_dir = Path(__file__).resolve().parent
 
 # Clears the logs file after each run
-log_file_path = script_dir.parent / "data_processing" / "logs" / "log.txt"
+# log_file_path = script_dir.parent / "data_processing" / "logs" / "log.txt"
+log_file_path = ".\\logs\\log.txt"
 with open(log_file_path, "w") as f:
     pass
 
@@ -27,7 +28,8 @@ def write(content):
     # Get the script's current directory
     script_dir = Path(__file__).resolve().parent
     # Move up one level to the parent directory and navigate to "logs/logs.txt"
-    log_file_path = script_dir.parent / "data_processing" / "logs" / "logs.txt"
+    # log_file_path = script_dir.parent / "data_processing" / "logs" / "logs.txt"
+    log_file_path = ".\\logs\\logs.txt"
 
     with open(log_file_path, "a") as f:
         f.write(content + "\n")
