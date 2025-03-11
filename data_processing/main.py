@@ -17,7 +17,7 @@ with open(log_file_path, "w") as f:
     pass
 
 #Download folder path 
-DOWNLOAD_FOLDER = "./csv/"
+DOWNLOAD_FOLDER = "./data/csv/"
 os.makedirs(DOWNLOAD_FOLDER, exist_ok=True)
 
 def write(content):
@@ -76,7 +76,7 @@ def download_and_extract(url, out):
 out = []
 
 # Ensure the "src" directory is in sys.path for the driver.
-src_path = "./csv/"
+src_path = "./data/csv/"
 if src_path not in sys.path:
     sys.path.insert(0, src_path)
 
@@ -125,9 +125,10 @@ if __name__ == "__main__":
             for url in csv_zip_urls:
                 output = download_and_extract(url, out)
                 if len(output) > 0:
-                    raw_file_path = src_path + str(output[0])
-                    parquet_output_path = "./transformed_gkg.parquet"
-                    json_output_path = "./transformed_gkg.json"
-                    run_pipeline(raw_file_path, parquet_output_path, json_output_path)
+                    for a in range(len(output)):
+                        raw_file_path = src_path + str(output[a])
+                        parquet_output_path = "./data/transformed_gkg.parquet"
+                        json_output_path = "./data/transformed_gkg.json"
+                        run_pipeline(raw_file_path, parquet_output_path, json_output_path)
         write("Files downloaded and processed. Sleeping for 15 minutes...")
         sleep(15*60)
