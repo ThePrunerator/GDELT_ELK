@@ -74,6 +74,11 @@ services:
     networks:
       - elastic
 
+  dataprocessing:
+    build: ./data_processing
+    volumes:
+      - scraperdata:/app/data
+
   es01:
     depends_on:
       setup:
