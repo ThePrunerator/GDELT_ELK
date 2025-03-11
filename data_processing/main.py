@@ -12,7 +12,6 @@ LAST_UPDATE_URL = "http://data.gdeltproject.org/gdeltv2/lastupdate.txt"
 script_dir = Path(__file__).resolve().parent
 
 # Clears the logs file after each run
-# log_file_path = script_dir.parent / "data_processing" / "logs" / "log.txt"
 log_file_path = ".\\logs\\log.txt"
 with open(log_file_path, "w") as f:
     pass
@@ -28,8 +27,7 @@ def write(content):
     # Get the script's current directory
     script_dir = Path(__file__).resolve().parent
     # Move up one level to the parent directory and navigate to "logs/logs.txt"
-    # log_file_path = script_dir.parent / "data_processing" / "logs" / "logs.txt"
-    log_file_path = ".\\logs\\logs.txt"
+    log_file_path = ".\\logs\\log.txt"
 
     with open(log_file_path, "a") as f:
         f.write(content + "\n")
@@ -126,9 +124,10 @@ if __name__ == "__main__":
             write(f"Found {len(csv_zip_urls)} files to download...\n")
             for url in csv_zip_urls:
                 output = download_and_extract(url, out)
-                raw_file_path = src_path + str(output)
-                parquet_output_path = "transformed_gkg.parquet"
-                json_output_path = "transformed_gkg.json"
-                run_pipeline(raw_file_path, parquet_output_path, json_output_path)
+                if len(output) > 0:
+                    raw_file_path = src_path + str(output[0])
+                    parquet_output_path = "./transformed_gkg.parquet"
+                    json_output_path = "./transformed_gkg.json"
+                    run_pipeline(raw_file_path, parquet_output_path, json_output_path)
         write("Files downloaded and processed. Sleeping for 15 minutes...")
         sleep(15*60)
